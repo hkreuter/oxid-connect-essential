@@ -32,11 +32,9 @@ class Category extends AbstractModelDataExtractor
      */
     public function extract(BaseModel $model): array
     {
-        var_dump(ContainerFacade::get(ContextInterface::class)->getCurrentShopId());
-
         $revisions           = [$this->buildRevision(Revision::TYPE_CATEGORY, $model->getId())];
-        $articleCategoryView = $this->viewNameGenerator->getViewName('oxobject2category');
-        $articleView         = $this->viewNameGenerator->getViewName('oxarticles');
+        $articleCategoryView = $this->viewNameGenerator->getViewName('oxobject2category', null, ContainerFacade::get(ContextInterface::class)->getCurrentShopId());
+        $articleView         = $this->viewNameGenerator->getViewName('oxarticles', null, ContainerFacade::get(ContextInterface::class)->getCurrentShopId());
 
         $query = "SELECT o2c.OXOBJECTID, a.OXPARENTID FROM `{$articleCategoryView}` o2c ";
         $query .= "LEFT JOIN `{$articleView}` a ON a.`OXID` = o2c.`OXOBJECTID` WHERE o2c.`OXCATNID` = ?";
