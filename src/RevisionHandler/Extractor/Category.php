@@ -10,6 +10,8 @@ use Makaira\OxidConnectEssential\RevisionHandler\AbstractModelDataExtractor;
 use OxidEsales\Eshop\Application\Model\Category as CategoryModel;
 use OxidEsales\Eshop\Core\Model\BaseModel;
 use OxidEsales\Eshop\Core\TableViewNameGenerator;
+use OxidEsales\EshopCommunity\Core\Di\ContainerFacade;
+use OxidEsales\EshopCommunity\Internal\Transition\Utility\ContextInterface;
 
 class Category extends AbstractModelDataExtractor
 {
@@ -30,6 +32,8 @@ class Category extends AbstractModelDataExtractor
      */
     public function extract(BaseModel $model): array
     {
+        var_dump(ContainerFacade::get(ContextInterface::class)->getCurrentShopId());
+
         $revisions           = [$this->buildRevision(Revision::TYPE_CATEGORY, $model->getId())];
         $articleCategoryView = $this->viewNameGenerator->getViewName('oxobject2category');
         $articleView         = $this->viewNameGenerator->getViewName('oxarticles');
